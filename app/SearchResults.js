@@ -2,12 +2,15 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { BsStarFill } from "react-icons/bs";
 
-const SearchResults = ({ movie }) => {
+const SearchResults = ({ movie, setMovieDetails }) => {
   const router = useRouter();
   return (
     <div
       className="relative cursor-pointer"
-      onClick={() => router.push(`/movies/${movie.id}`)}
+      onClick={() => {
+        router.push(`/movies/${movie.id}}`);
+        setMovieDetails([]);
+      }}
     >
       <div className="flex space-x-5 justify-between items-center border-2 p-2 rounded-full relative z-10 bg-slate-900">
         {movie.poster_path ? (

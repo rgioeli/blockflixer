@@ -16,6 +16,7 @@ export default function RootLayout({ children }) {
         className={`${inter.className} bg-gradient-to-r from-slate-900 to-slate-600 text-white overflow-x-hidden`}
       >
         <Header />
+        <Search />
         <div className="p-5">{children}</div>
       </body>
     </html>

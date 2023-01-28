@@ -70,7 +70,7 @@ const Search = ({}) => {
           inputValue.current.value &&
           movieDetails.map((movie) => (
             <Suspense key={movie.id} fallback={<p>Loading...</p>}>
-              <SearchResults movie={movie} />
+              <SearchResults movie={movie} setMovieDetails={setMovieDetails} />
             </Suspense>
           ))}
       </div>
