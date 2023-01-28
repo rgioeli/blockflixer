@@ -1,7 +1,7 @@
 "use client";
+
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
 import {
   BsArrowLeftSquareFill,
   BsArrowRightSquareFill,
@@ -10,8 +10,6 @@ import {
 
 const MovieCategory = ({ category }) => {
   const router = useRouter();
-  const scrollRef = useRef();
-  const arrowRef = useRef();
 
   return (
     <div className="relative overflow-y-hidden">

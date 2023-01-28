@@ -4,7 +4,7 @@ import GoBackButton from "./GoBackButton";
 
 async function getCast(movie_id) {
   const video = await fetch(
-    `https://api.themoviedb.org/3/movie/${movie_id}/credits?api_key=91cb7d5234eee52792ae45610fc14486&language=en-US`
+    `https://api.themoviedb.org/3/movie/${movie_id}/credits?api_key=${process.env.API_KEY}&language=en-US`
   );
 
   return video.json();
@@ -12,26 +12,19 @@ async function getCast(movie_id) {
 
 async function getPersonDetails(person_id) {
   const personDetails = await fetch(`
-  https://api.themoviedb.org/3/person/${person_id}?api_key=91cb7d5234eee52792ae45610fc14486&language=en-US`);
+  https://api.themoviedb.org/3/person/${person_id}?api_key=${process.env.API_KEY}&language=en-US`);
 
   return personDetails.json();
 }
 
 const Movie = async ({ movie }) => {
-  let firstCastMemberDetails;
-
-  const {
-    cast: [firstCastMember],
-  } = await getCast(movie.id);
-
-  if (firstCastMember) {
-    firstCastMemberDetails = await getPersonDetails(firstCastMember.id);
-  } else {
-    firstCastMemberDetails = null;
-  }
+  const { cast } = await getCast(movie.id);
+  const firstCastMember = cast && cast[0];
+  const firstCastMemberDetails = await getPersonDetails(firstCastMember.id);
 
   const trailer = movie.videos.results.filter(
     (video) =>
+      video &&
       video.type.toLowerCase().includes("trailer") &&
       video.site.toLowerCase().includes("youtube")
   );
@@ -48,13 +41,15 @@ const Movie = async ({ movie }) => {
         <GoBackButton />
         <div className="flex flex-col md:flex-row md:items-start md:justify-start relative min-h-[50%]">
           <div className="flex justify-center mb-5 relative h-full md:p-5 md:pr-0 bg-white">
-            <Image
-              alt={movie.title}
-              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-              height={1200}
-              width={1200}
-              className="max-w-sm"
-            />
+            {movie.poster_path && (
+              <Image
+                alt={movie.title}
+                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                height={1200}
+                width={1200}
+                className="max-w-sm"
+              />
+            )}
           </div>
           <div className="p-5 flex flex-col justify-center max-w-[500px] bg-white text-slate-900">
             <div className="flex space-x-5 items-center">
@@ -65,15 +60,8 @@ const Movie = async ({ movie }) => {
               {movie.tagline && movie.tagline}
             </p>
             <p className="text-md leading-6 mt-2 overflow-y-auto">
-              {movie.overview}
+              {movie.overview && movie.overview}
             </p>
-            {/* <div className="flex space-x-2 mt-2">
-              {firstCastMember && (
-                <p className="border-2 text-sm font-bold border-slate-900 rounded-full px-2">
-                  {"DICKL"}
-                </p>
-              )}
-            </div> */}
             <div className="flex space-x-2 items-center mt-2">
               <BsStarFill size={25} className="text-slate-900" />
               <p className="text-sm font-medium">

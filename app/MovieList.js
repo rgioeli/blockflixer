@@ -1,10 +1,4 @@
-"use client";
-
-import Image from "next/image";
-import { BsStarFill } from "react-icons/bs";
-import { useRouter } from "next/navigation";
 import MovieCategory from "./MovieCategory";
-import Link from "next/link";
 
 const MovieList = ({
   popular,
@@ -15,7 +9,6 @@ const MovieList = ({
   mystery,
   horror,
 }) => {
-  const router = useRouter();
   return (
     <>
       <div className="mt-10 text-2xl">
