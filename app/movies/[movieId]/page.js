@@ -1,7 +1,6 @@
-import { useRouter } from "next/navigation";
-import movieList from "../../../dummyMovies.json";
 import Movie from "./Movie";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 async function getMovie(id) {
   const movie = await fetch(
@@ -19,7 +18,11 @@ const Page = async (props) => {
 
   return (
     <div className="container m-auto">
-      <Movie movie={movie} />
+      <Suspense
+        fallback={<p className="mt-5 text-center">Loading some details...</p>}
+      >
+        <Movie movie={movie} />
+      </Suspense>
     </div>
   );
 };

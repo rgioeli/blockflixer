@@ -38,7 +38,6 @@ const Movie = async ({ movie }) => {
   return (
     <div className="container">
       <div className="flex flex-col justify-center items-center scrollbar">
-        <GoBackButton />
         <div className="flex flex-col md:flex-row md:items-start md:justify-start relative min-h-[50%]">
           <div className="flex justify-center mb-5 relative h-full md:p-5 md:pr-0 bg-white">
             {movie.poster_path && (

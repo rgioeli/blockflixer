@@ -79,18 +79,18 @@ export default async function Home() {
   return (
     <main className="">
       <div className="container m-auto">
-        <Search />
-        <Suspense fallback={"Loading Movies..."}>
-          <MovieList
-            popular={popular}
-            comedies={comedies}
-            horror={horror}
-            mystery={mystery}
-            family={family}
-            thriller={thriller}
-            romance={romance}
-          />
+        <Suspense fallback={<p>Fallback...</p>}>
+          <Search />
         </Suspense>
+        <MovieList
+          popular={popular}
+          comedies={comedies}
+          horror={horror}
+          mystery={mystery}
+          family={family}
+          thriller={thriller}
+          romance={romance}
+        />
       </div>
     </main>
   );

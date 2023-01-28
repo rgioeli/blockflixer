@@ -7,8 +7,9 @@ import SearchResults from "./SearchResults";
 const Search = ({}) => {
   const inputValue = useRef();
 
-  const [movieDetails, setMovieDetails] = useState({});
+  const [movieDetails, setMovieDetails] = useState([]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleError = (code) => {
     setError(code);
@@ -21,8 +22,9 @@ const Search = ({}) => {
   }, [error]);
 
   const handleForm = async (e) => {
+    setMovieDetails([]);
     e.preventDefault();
-
+    setLoading(true);
     //input value
     const keyword = inputValue.current.value;
     try {
@@ -36,11 +38,14 @@ const Search = ({}) => {
       const results = await movie_details.json();
       if (results.error) return handleError(results.error);
       setMovieDetails(results.success.results);
+      setLoading(false);
     } catch (e) {
+      setLoading(false);
       throw new Error("No Results");
+    } finally {
+      setLoading((prevState) => prevState == true && false);
     }
   };
-
   return (
     <div className="text-white w-full flex flex-col justify-center items-center">
       <form onSubmit={handleForm} className="w-full">
@@ -56,7 +61,10 @@ const Search = ({}) => {
           </button>
         </div>
       </form>
-      {error && <p className="mt-2">{error}</p>}
+      {error && <p className="font-bold mt-5 text-center">{error}</p>}
+      {loading && (
+        <p className="font-bold mt-5 text-center">Searching for movies...</p>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
         {movieDetails.length > 0 &&
           inputValue.current.value &&
