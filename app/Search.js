@@ -5,7 +5,6 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import SearchResults from "./SearchResults";
 
 const Search = ({}) => {
-  const router = useRouter();
   const inputValue = useRef();
 
   const [movieDetails, setMovieDetails] = useState({});
