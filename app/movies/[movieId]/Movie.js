@@ -4,7 +4,7 @@ import GoBackButton from "./GoBackButton";
 
 async function getCast(movie_id) {
   const video = await fetch(
-    `https://api.themoviedb.org/3/movie/${movie_id}/credits?api_key=${process.env.API_KEY}&language=en-US`
+    `https://api.themoviedb.org/3/movie/${movie_id}/credits?api_key=91cb7d5234eee52792ae45610fc14486&language=en-US`
   );
 
   return video.json();
@@ -12,7 +12,7 @@ async function getCast(movie_id) {
 
 async function getPersonDetails(person_id) {
   const personDetails = await fetch(`
-  https://api.themoviedb.org/3/person/${person_id}?api_key=${process.env.API_KEY}&language=en-US`);
+  https://api.themoviedb.org/3/person/${person_id}?api_key=91cb7d5234eee52792ae45610fc14486&language=en-US`);
 
   return personDetails.json();
 }
