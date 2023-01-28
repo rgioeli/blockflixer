@@ -2,11 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import {
-  BsArrowLeftSquareFill,
-  BsArrowRightSquareFill,
-  BsStarFill,
-} from "react-icons/bs";
+import { BsStarFill } from "react-icons/bs";
 
 const MovieCategory = ({ category }) => {
   const router = useRouter();
