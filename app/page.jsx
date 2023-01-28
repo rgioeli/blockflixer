@@ -1,91 +1,97 @@
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from './page.module.css'
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
+import { Suspense } from "react";
+import Error from "./error";
+import MovieList from "./MovieList";
+import Search from "./Search";
 
-const inter = Inter({ subsets: ['latin'] })
+async function getPopularMovies() {
+  const movies = await fetch(
+    `https://api.themoviedb.org/3/movie/popular?api_key=91cb7d5234eee52792ae45610fc14486&language=en-US&page=1`,
+    { next: { revalidate: 43200 } }
+  );
 
-export default function Home() {
+  return movies.json();
+}
+
+async function getComedies() {
+  const comedies = await fetch(
+    `https://api.themoviedb.org/3/discover/movie?api_key=91cb7d5234eee52792ae45610fc14486&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=35&with_watch_monetization_types=flatrate`,
+    { next: { revalidate: 43200 } }
+  );
+
+  return comedies.json();
+}
+
+async function getRomance() {
+  const comedies = await fetch(
+    `https://api.themoviedb.org/3/discover/movie?api_key=91cb7d5234eee52792ae45610fc14486&language=en-US&sort_by=popularity.desc&include_adult=false&region=US&include_video=false&with_genres=10749&page=1&with_watch_monetization_types=flatrate`,
+    { next: { revalidate: 43200 } }
+  );
+
+  return comedies.json();
+}
+
+async function getThrillers() {
+  const comedies = await fetch(
+    `https://api.themoviedb.org/3/discover/movie?api_key=91cb7d5234eee52792ae45610fc14486&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=53&with_watch_monetization_types=flatrate`,
+    { next: { revalidate: 43200 } }
+  );
+
+  return comedies.json();
+}
+
+async function getMysteries() {
+  const comedies = await fetch(
+    `https://api.themoviedb.org/3/discover/movie?api_key=91cb7d5234eee52792ae45610fc14486&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=9648&with_watch_monetization_types=flatrate`,
+    { next: { revalidate: 43200 } }
+  );
+
+  return comedies.json();
+}
+
+async function getFamily() {
+  const comedies = await fetch(
+    `https://api.themoviedb.org/3/discover/movie?api_key=91cb7d5234eee52792ae45610fc14486&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=10751&with_watch_monetization_types=flatrate`,
+    { next: { revalidate: 43200 } }
+  );
+
+  return comedies.json();
+}
+
+async function getHorror() {
+  const comedies = await fetch(
+    `https://api.themoviedb.org/3/discover/movie?api_key=91cb7d5234eee52792ae45610fc14486&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=27&with_watch_monetization_types=flatrate`,
+    { next: { revalidate: 43200 } }
+  );
+
+  return comedies.json();
+}
+
+export default async function Home() {
+  const popular = await getPopularMovies();
+  const comedies = await getComedies();
+  const horror = await getHorror();
+  const mystery = await getMysteries();
+  const family = await getFamily();
+  const thriller = await getThrillers();
+  const romance = await getRomance();
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.jsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+    <main className="">
+      <div className="container m-auto">
+        <Search />
+        <Suspense fallback={"Loading Movies..."}>
+          <MovieList
+            popular={popular}
+            comedies={comedies}
+            horror={horror}
+            mystery={mystery}
+            family={family}
+            thriller={thriller}
+            romance={romance}
+          />
+        </Suspense>
       </div>
     </main>
-  )
+  );
 }
